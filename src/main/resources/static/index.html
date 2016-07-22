@@ -10,13 +10,24 @@
         <title>Demo Site for DOAG Konferenz 2016</title>
 
         <link href="/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/css/demo.css" rel="stylesheet" />	
+        <link href="/css/demo.css" rel="stylesheet" />
 
         <script type="text/javascript" src="/js/jquery-2.2.2.min.js"></script>
+        <script type="text/javascript" src="/js/ansi_up.js"></script>       
+
+        <script>
+            $(document).ready(function () {
+                $.get('/api/banner', function (data) {
+                    $('.banner').each(function () {
+                        $(this).html(ansi_up.ansi_to_html(data));
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
         <div class="container">
-            <div class="header clearfix">		
+            <div class="header clearfix">
                 <h3 class="text-muted">DOAG Konferenz 2016<br />
                     Database centric applications with Spring Boot and jOOQ</h3>
             </div>
@@ -43,10 +54,22 @@
                         </p>
                     </blockquote>
                 </div>
-            </div>	
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <pre class="banner"></pre>
+                    <p>
+                        <a href="https://twitter.com/lukaseder/status/755489778448142336">Banner seem to be important for both ;)</a>
+                        <br />
+                        ANSI to HTML done with <a href="https://github.com/drudru/ansi_up">ansi_up.js</a> by Dru Nelson.
+                    </p>
+                </div>                
+            </div>
+
             <footer class="footer">
                 <p>&copy; 2016 <a href="http://michael-simons.eu">Michael Simons</a></p>
             </footer>
-        </div>	
-    </body>    
+        </div>
+    </body>
 </html>
