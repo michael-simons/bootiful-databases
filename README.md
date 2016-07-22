@@ -22,13 +22,13 @@ As DOAG Konferenz is an Oracle database centric conference, I used Oracle throug
 
 1. Go to [docker.com](http://www.docker.com/products/docker) and install docker on your machine
 2. Download [Oracle Database 12c Release 1 Enterprise Edition for Linux](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/database12c-linux-download-2240591.html)
-3. Go to [Oracles docker images repository](https://github.com/oracle/docker-images/tree/master/OracleDatabase), download the _OracleDatabase_ scripts and follow the instructions. Remember to add the two files from step 2 to "dockerfiles/12.1.0.2". I used the following command: `./buildDockerImage.sh -v 12.1.0.2 -e -p admin`
-4. Then, inside this repository use `docker build -t msimons/doag2016 .` to create an image containing a user _doag2016_ with the same password inside the PDB container _ORCLPDB1_
-5. Run a container based on this image with `docker run -d -p 1521:1521 -p 5500:5500 -p 5501:5501 msimons/doag2016`
+3. Go to [Oracles docker images repository](https://github.com/oracle/docker-images/tree/master/OracleDatabase), download the _OracleDatabase_ scripts and follow the instructions. Remember to add the two files from step 2 to "dockerfiles/12.1.0.2". I used the following command: `./buildDockerImage.sh -v 12.1.0.2 -e`
+4. Then, inside this repository, create a running container of this image with `mvn docker:start`. The first start will take a while. The reason behind this is that the Oracle database files are created during the first start and not during image creation. The files are storted inside `${project.basedir}/var`.  There's a timeout of 30 minutes. You may have to change this if you are on a slower machine
+5. The container exposes the following ports to localhost: 1521, 5500 and 5501. The first for SQL*Plus, the later ones for the Oracle Enterprise Manager
 
 You can access the Enterprise manager express for the root container at [https://localhost:5500/em](https://localhost:5500/em) and the container ORCLPDB1 at [https://localhost:5501/em](https://localhost:5501/em).
 
-Use SQL*Plus to interact with the database. The admin password depends on what you used in step 3, the _doag2016_ account can be used with `sqlplus doag2016/doag2016@//localhost:1521/ORCLPDB1`.
+Use SQL*Plus to interact with the database. The admin password is a password generated during first startup and you can find it inside the container logs. The _doag2016_ account can be used with `sqlplus doag2016/doag2016@//localhost:1521/ORCLPDB1`, the password is _doag2016_, too.
 
 
 

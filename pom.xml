@@ -57,6 +57,38 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.17.1</version>
+				<configuration>
+					<images>
+						<image>
+							<name>oracle/database:12.1.0.2-ee</name>
+							<run>
+								<volumes>
+									<bind>
+										<volume>${project.build.scriptSourceDirectory}:/var/tmp/scripts</volume>
+										<volume>${basedir}/var/oradata:/opt/oracle/oradata</volume>
+									</bind>
+								</volumes>
+								<ports>
+									<port>1521:1521</port>
+									<port>5500:5500</port>
+									<port>5501:5501</port>
+								</ports>
+								<wait>
+									<log>DATABASE IS READY TO USE!</log>
+									<time>3600000</time>
+									<exec>
+										<postStart>/var/tmp/scripts/initdb.sh</postStart>
+									</exec>
+								</wait>
+							</run>
+						</image>
+					</images>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
