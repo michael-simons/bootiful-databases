@@ -92,4 +92,29 @@
 		</plugins>
 	</build>
 
+	<repositories>
+                <repository>
+                        <id>maven.oracle.com</id>
+                        <name>oracle-maven-repo</name>
+                        <url>https://maven.oracle.com</url>
+                        <layout>default</layout>
+                        <releases>
+                            <enabled>true</enabled>
+                            <updatePolicy>always</updatePolicy>
+                        </releases>
+                </repository>
+	</repositories>
+	<pluginRepositories>	
+                <pluginRepository>
+                    <id>maven.oracle.com</id>
+                    <name>oracle-maven-repo</name>
+                    <url>https://maven.oracle.com</url>
+                    <layout>default</layout>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                </pluginRepository>
+	</pluginRepositories>
+
 </project>

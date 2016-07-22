@@ -30,7 +30,22 @@ You can access the Enterprise manager express for the root container at [https:/
 
 Use SQL*Plus to interact with the database. The admin password is a password generated during first startup and you can find it inside the container logs. The _doag2016_ account can be used with `sqlplus doag2016/doag2016@//localhost:1521/ORCLPDB1`, the password is _doag2016_, too.
 
+## Configuring the Oracle Maven Repository
 
+This demo uses the Oracle JDBC driver from the official [Oracle Maven Repository](http://www.oracle.com/webfolder/application/maven/index.html) under those coordinates:
+
+```
+<dependency>
+	<groupId>com.oracle.jdbc</groupId>
+	<artifactId>ojdbc7</artifactId>
+</dependency>
+<dependency>
+	<groupId>com.oracle.jdbc</groupId>
+	<artifactId>orai18n</artifactId>
+</dependency>
+```
+
+Please follow those [instructions from Oracle](http://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9010) to make this work for your Maven installation.
 
 ## License
 
