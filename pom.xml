@@ -21,7 +21,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		
+                <flyway.version>4.0.3</flyway.version>
+                <java.version>1.8</java.version>
                 <oracle.version>12.1.0.2</oracle.version>
                 
                 <!-- jOOQ is a code generator, it needs to be run before the build and 
@@ -105,6 +107,33 @@
 					</images>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${flyway.version}</version>
+				<!-- Note that we're executing the Flyway
+			                                plugin in the "generate-sources" phase -->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!-- Note that we need to prefix the db/migration
+			                                path with filesystem: to prevent Flyway
+			                                from looking for our migration scripts
+			                                only on the classpath -->
+				<configuration>
+					<url>${db.url}</url>
+					<user>${db.username}</user>
+					<password>${db.password}</password>
+					<locations>
+						<location>filesystem:src/main/resources/db/migration</location>
+					</locations>
+				</configuration>
+			</plugin>			
 		</plugins>
                 <resources>
                         <resource>
