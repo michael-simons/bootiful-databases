@@ -149,6 +149,53 @@
 					</locations>
 				</configuration>
 			</plugin>			
+			<plugin>
+				<groupId>org.jooq.pro</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>${jooq.version}</version>
+				<!-- The jOOQ code generation plugin is also 
+			                                executed in the generate-sources phase,
+			                                prior to compilation -->
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jdbc>
+						<driver>oracle.jdbc.OracleDriver</driver>
+						<url>${db.url}</url>
+						<user>${db.username}</user>
+						<password>${db.password}</password>
+					</jdbc>
+					<generator>
+						<database>
+							<name>org.jooq.util.oracle.OracleDatabase</name>
+							<schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
+							<includes>.*</includes>
+							<excludes>schema_version</excludes>
+							<schemata>
+								<schema>
+									<inputSchema>${db.schema}</inputSchema>
+									<outputSchemaToDefault>true</outputSchemaToDefault>
+								</schema>
+							</schemata>
+						</database>
+						<generate>
+							<deprecated>false</deprecated>
+							<pojos>true</pojos>
+							<immutablePojos>true</immutablePojos>
+						</generate>
+						<target>
+							<packageName>ac.simons.doag2016.db</packageName>
+							<directory>target/generated-sources/jooq</directory>
+						</target>
+					</generator>
+				</configuration>
+			</plugin>
 		</plugins>
                 <resources>
                         <resource>
