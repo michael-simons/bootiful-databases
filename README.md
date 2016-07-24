@@ -47,6 +47,10 @@ This demo uses the Oracle JDBC driver from the official [Oracle Maven Repository
 
 Please follow those [instructions from Oracle](http://docs.oracle.com/middleware/1213/core/MAVEN/config_maven_repo.htm#MAVEN9010) to make this work for your Maven installation.
 
+## Installing jOOQ Pro
+
+This demo uses an Oracle Enterprise Edition database, so it needs a jOOQ Professional edition to run. You can get a free, 30 days trial edition here: [jOOQ Download](http://www.jooq.org/download/).
+
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">"Database centric applications with Spring Boot and jOOQ"</span> von <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/michael-simons/DOAG2016" property="cc:attributionName" rel="cc:attributionURL">Michael J. Simons</a> ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
