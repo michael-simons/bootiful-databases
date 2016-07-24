@@ -87,6 +87,20 @@ html[dir="rtl"] .demo-oracle-icon {
   padding-left: 4px;
 }
 
+.demo-enerko-icon {
+  width: 140px;
+  height: 30px;
+  background-image: url("images/enerko_logo.png");
+  background-size: cover;
+}
+
+html:not([dir="rtl"]) .demo-enerko-icon {
+  margin-right: 10px;
+}
+html[dir="rtl"] .demo-enerko-icon {
+  margin-left: 10px;
+}
+
 .demo-avatar-icon {
   width:24px;
   height:24px;

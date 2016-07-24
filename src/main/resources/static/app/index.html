@@ -17,9 +17,9 @@
      role value for that section to represent the appropriate content type.
      ***************************** IMPORTANT INFORMATION ************************************ -->
 
-<html lang="en-us">
+<html lang="en-GB">
   <head>
-    <title>Oracle JET Quick Start - Basic</title>
+    <title data-bind="text: appName">Oracle JET Quick Start - Basic</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
@@ -59,19 +59,8 @@
               data-bind="ojModule: 'header'"></header>
             <!-- This is where your main page content will be loaded -->
             <div class="oj-web-applayout-max-width oj-web-applayout-content">
-              <div class="oj-flex">
-                <div class="oj-xl-3 oj-lg-3 oj-sm-12 oj-flex-item oj-flex">
-                  <div id="navigationContent" role="navigation" class="oj-panel oj-margin oj-flex-item"
-                    data-bind="ojModule: {viewName: 'navContent'}">
-                    <!--  This section is usually used for Navigation.
-                      ** If its purpose is changed, the "role" attribute should be changed as well
-                      ** to meet accessibility guidelines.  Using the ojModule binding to load the specific HTML template
-                      ** that will be shown on the page. Using the "viewName" option just loads the HTML template
-                      ** while binding it to the existing viewmodel.
-                    -->
-                  </div>
-                </div>
-                <div class="oj-xl-6 oj-lg-9 oj-sm-12 oj-flex-item oj-flex">
+              <div class="oj-flex">                
+                <div class="oj-sm-12 oj-flex-item oj-flex">
                   <div id="mainContent" role="main" class="oj-panel oj-margin oj-flex-item"
                     data-bind="ojModule: router.moduleConfig">
                     <!-- Unlike the Navigation and Complementary sections,
@@ -89,7 +78,7 @@
                   ** the div will take up all 12 columns at a small and up media query size. When it hits extra large,
                   ** it will only take up 3 columns.
                 -->
-                <div class="oj-xl-3 oj-sm-12 oj-flex-item oj-flex">
+                <div class="oj-sm-12 oj-flex-item oj-flex">
                   <div id="complementaryContent" role="complementary" class="oj-panel oj-margin oj-flex-item"
                   data-bind="ojModule: {viewName: 'compContent'}">
                   </div>

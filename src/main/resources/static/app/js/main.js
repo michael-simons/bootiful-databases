@@ -16,7 +16,7 @@ requirejs.config({
     'promise': 'libs/es6-promise/promise-1.0.0.min',
     'hammerjs': 'libs/hammer/hammer-2.0.4.min',
     'ojdnd': 'libs/dnd-polyfill/dnd-polyfill-1.0.0.min',
-    'ojs': 'libs/oj/v2.0.2/debug',
+    'ojs': 'libs/oj/v2.0.2/min',
     'ojL10n': 'libs/oj/v2.0.2/ojL10n',
     'ojtranslations': 'libs/oj/v2.0.2/resources',
     'signals': 'libs/js-signals/signals.min',
@@ -54,11 +54,8 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
   function (oj, ko, $) { // this callback gets executed when all required modules are loaded
     var router = oj.Router.rootInstance;
     router.configure({
-      'home': {label: 'Home', isDefault: true},
-      'people': {label: 'People'},
-      'library': {label: 'Library'},
-      'graphics': {label: 'Graphics'},
-      'performance': {label: 'Performance'}
+      'charts': {label: 'Charts'},
+      'artists': {label: 'Artists', isDefault: true},      
     });
 
     function RootViewModel() {
@@ -67,16 +64,10 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
 
       // Shared navigation data and callbacks for nav bar (medium+ screens) and nav list (small screens)
       var navData = [
-        {name: 'Home', id: 'home',
-          iconClass: 'demo-home-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'People', id: 'people',
-          iconClass: 'demo-education-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Library', id: 'library',
-          iconClass: 'demo-library-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Graphics', id: 'graphics',
-          iconClass: 'demo-palette-icon-24  demo-icon-font-24 oj-navigationlist-item-icon'},
-        {name: 'Performance', id: 'performance',
-          iconClass: 'demo-grid-icon-16 demo-icon-font-24 oj-navigationlist-item-icon'}
+        {name: 'Charts', id: 'charts',
+          iconClass: 'demo-home-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'},        
+        {name: 'Artists', id: 'artists',
+          iconClass: 'demo-education-icon-24 demo-icon-font-24 oj-navigationlist-item-icon'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
       var smQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.SM_ONLY);
@@ -91,7 +82,7 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
       };
       self.drawerParams = {
         displayMode: 'push',
-        selector: '#offcanvas',
+        selector: '#offcanvas'
       };
       // Called by navigation drawer toggle button and after selection of nav drawer item
       self.toggleDrawer = function() {
@@ -101,13 +92,17 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
       var mdQuery = oj.ResponsiveUtils.getFrameworkQuery(oj.ResponsiveUtils.FRAMEWORK_QUERY_KEY.MD_UP);
       self.mdScreen = oj.ResponsiveKnockoutUtils.createMediaQueryObservable(mdQuery);
       self.mdScreen.subscribe(function() {oj.OffcanvasUtils.close(self.drawerParams);});
+      
+      // Application Name used in Branding Area
+      self.appName = ko.observable("Spring Boot + jOOQ + Oracle JET = 😍");
+      self.appNameSmall = ko.observable("Boot + jOOQ + JET = 😍");      
     }
 
     oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
     oj.Router.sync().then(
       function () {
-        // bind your ViewModel for the content of the whole page body.
-        ko.applyBindings(new RootViewModel(), document.getElementById('globalBody'));
+        // bind your ViewModel for the content of the whole page body.        
+        ko.applyBindings(new RootViewModel(), document.getElementsByTagName('html')[0]);
       },
       function (error) {
         oj.Logger.error('Error in root start: ' + error.message);
