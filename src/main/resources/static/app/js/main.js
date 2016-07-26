@@ -20,7 +20,8 @@ requirejs.config({
     'ojL10n': 'libs/oj/v2.0.2/ojL10n',
     'ojtranslations': 'libs/oj/v2.0.2/resources',
     'signals': 'libs/js-signals/signals.min',
-    'text': 'libs/require/text'
+    'text': 'libs/require/text',
+    'moment': 'libs/momentjs/moment-with-locales'
   }
   //endinjector
   ,
