@@ -1,4 +1,4 @@
-define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'ojs/ojchart'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'ojs/ojchart', 'ojs/ojdatetimepicker'],
         function (oj, ko, $, moment) {
             function artistsContentViewModel() {
                 var self = this;
@@ -26,33 +26,35 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                         }});
                 }, this);
 
+                self.fromValue = ko.observable('2016-01-01');
+                self.toValue = ko.observable('2016-03-31');
 
                 self.areaSeriesValue = ko.observableArray([]);
                 self.areaGroupsValue = ko.observableArray([]);
                 self.dataCursorValue = ko.observable('off');
 
-                self.selectionChanged = function (event, data) {
-                    if ("value" !== data.option) {
-                        return;
-                    }
-
+                var updateCharts = function () {
                     self.areaSeriesValue.removeAll();
                     self.areaGroupsValue.removeAll();
                     self.dataCursorValue('off');
 
-                    if (data.value.length === 0) {
+                    if (self.selectedArtists().length === 0) {
                         return;
                     }
 
                     $.ajax({
                         url: "/api/artists/" + self.selectedArtists().join() + "/cumulativePlays",
                         type: 'GET',
+                        data: {
+                            from: self.fromValue(),
+                            to: self.toValue()
+                        },
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR) {
                             if (data.records.length === 0) {
                                 return;
                             }
-                            
+
                             // Need the artists labels for the series
                             var artists = self.allArtists().filter(function (elem) {
                                 return self.selectedArtists.indexOf(elem.value) >= 0;
@@ -101,6 +103,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                             self.dataCursorValue('on');
                         }
                     });
+                };
+
+                self.optionChanged = function (event, data) {
+                    if ("value" !== data.option) {
+                        return;
+                    }
+                    updateCharts();
                 };
             }
             return new artistsContentViewModel();

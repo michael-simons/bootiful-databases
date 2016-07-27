@@ -10,10 +10,27 @@
                                                           value: selectedArtists,
                                                           required: false,
                                                           options: allArtists,
-                                                          optionChange: selectionChanged,
-                                                          rootAttributes: {style:'max-width:40em'}}" />
+                                                          optionChange: optionChanged}" />
+                </div>                
+            </div>
+            <div class="oj-flex">  
+                <div class="oj-flex-item">
+                    <label id="inputgrouplabel">Period</label>
+                    <div class="oj-form-control-group" aria-labelledby="inputgrouplabel" role="group">
+                        <input aria-label="from" id="from" 
+                               data-bind="ojComponent: {component: 'ojInputDate',           
+                                  max: toValue,
+                                  value: fromValue,
+                                  optionChange: optionChanged}"/>
+                        <input  aria-label="to"    id="to" 
+                                data-bind="ojComponent: {component: 'ojInputDate',                                   
+                                  min: fromValue,
+                                  value: toValue,
+                                  optionChange: optionChanged}"/>                      
+                    </div>
                 </div>
             </div>
+
         </form>
     </div>
     <h2>Cumulative plays per artist and day</h2>
