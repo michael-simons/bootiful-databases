@@ -1,5 +1,5 @@
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojselectcombobox'],
-        function (oj, ko, $) {
+define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'ojs/ojchart'],
+        function (oj, ko, $, moment) {
             function artistsContentViewModel() {
                 var self = this;
 
