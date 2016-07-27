@@ -21,7 +21,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                             self.allArtists.removeAll();
                             for (var i = 0, len = data.records.length; i < len; i++) {
                                 self.allArtists.push({value: data.records[i][0], label: data.records[i][1]});
-                            }                            
+                            }
                             self.selectedArtists.removeAll();
                         }});
                 }, this);
@@ -35,31 +35,69 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                     if ("value" !== data.option) {
                         return;
                     }
-                    
+
                     self.areaSeriesValue.removeAll();
                     self.areaGroupsValue.removeAll();
                     self.dataCursorValue('off');
-                    
-                    if (data.value.length === 0) {                        
+
+                    if (data.value.length === 0) {
                         return;
                     }
 
                     $.ajax({
-                        url: "/api/artists/" + self.selectedArtists()[0] + "/cumulativePlays",
+                        url: "/api/artists/" + self.selectedArtists().join() + "/cumulativePlays",
                         type: 'GET',
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR) {
                             if (data.records.length === 0) {
                                 return;
                             }
-                            var groups = []
-                            var items = []
-                            for (var i = 0, len = data.records.length; i < len; i++) {
-                                groups.push(moment(data.records[i][0]).toDate());
-                                items.push(data.records[i][2]);
+                            
+                            // Need the artists labels for the series
+                            var artists = self.allArtists().filter(function (elem) {
+                                return self.selectedArtists.indexOf(elem.value) >= 0;
+                            }).map(function (elem) {
+                                return elem.label;
+                            });
+
+                            // Make it nice and compute continous days
+                            var firstDay = moment(data.records[0][0]);
+                            var lastDay = moment(data.records[data.records.length - 1][0]);
+                            var days = [];
+                            while (firstDay.isSameOrBefore(lastDay)) {
+                                days.push(firstDay.toDate());
+                                firstDay.add(1, 'd');
                             }
-                            self.areaGroupsValue(groups);
-                            self.areaSeriesValue([{name: data.records[0][1], items: items}]);
+
+                            // Create groups and series from array of records                            
+                            // This groups the records by day
+                            var hlp = data.records.reduce(function (acc, cur) {
+                                var key = moment(cur[0]).toDate();
+                                if (acc[key]) {
+                                    acc[key][cur[1]] = cur[2];
+                                } else {
+                                    acc[key] = {};
+                                    $.each(artists, function (i, val) {
+                                        acc[key][val] = val === cur[1] ? cur[2] : null;
+                                    });
+                                }
+                                return acc;
+                            }, {});
+
+                            // This collects the items by artists
+                            var series = artists.map(function (label) {
+                                var data = [];
+                                var prev = 0;
+                                $.each(days, function (i, value) {
+                                    var cur = hlp[value] && hlp[value][label] || prev;
+                                    data.push(cur);
+                                    prev = cur;
+                                });
+                                return {name: label, items: data};
+                            });
+
+                            self.areaGroupsValue(days);
+                            self.areaSeriesValue(series);
                             self.dataCursorValue('on');
                         }
                     });
