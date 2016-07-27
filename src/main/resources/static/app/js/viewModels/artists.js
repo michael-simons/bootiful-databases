@@ -18,15 +18,11 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                         type: 'GET',
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR) {
-                            var hlp = [];
-                            hlp.push({value: -1, label: null});
+                            self.allArtists.removeAll();
                             for (var i = 0, len = data.records.length; i < len; i++) {
-                                hlp.push({value: data.records[i][0], label: data.records[i][1]});
-                            }
-                            self.allArtists(hlp);
-
+                                self.allArtists.push({value: data.records[i][0], label: data.records[i][1]});
+                            }                            
                             self.selectedArtists.removeAll();
-                            self.selectedArtists.push(-1);
                         }});
                 }, this);
 
@@ -44,7 +40,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                     self.areaGroupsValue.removeAll();
                     self.dataCursorValue('off');
                     
-                    if (data.value.length === 0 || data.value[0] === -1) {                        
+                    if (data.value.length === 0) {                        
                         return;
                     }
 

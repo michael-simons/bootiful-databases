@@ -6,12 +6,12 @@
                 <div class="oj-flex-item">
                     <label for="multiselect">Select artist</label>                    
                     <select id="multiselect" data-bind="ojComponent: {component: 'ojSelect',
-                                                          multiple: false,
+                                                          multiple: true,
                                                           value: selectedArtists,
                                                           required: false,
                                                           options: allArtists,
                                                           optionChange: selectionChanged,
-                                                          rootAttributes: {style:'max-width:20em'}}" />
+                                                          rootAttributes: {style:'max-width:40em'}}" />
                 </div>
             </div>
         </form>
