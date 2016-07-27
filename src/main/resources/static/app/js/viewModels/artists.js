@@ -12,7 +12,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                 self.selectedArtists = ko.observableArray([]);
 
                 // Load the artists data
-                ko.computed(function() {
+                ko.computed(function () {
                     $.ajax({
                         url: "/api/artists",
                         type: 'GET',
@@ -24,7 +24,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                                 hlp.push({value: data.records[i][0], label: data.records[i][1]});
                             }
                             self.allArtists(hlp);
-                            
+
                             self.selectedArtists.removeAll();
                             self.selectedArtists.push(-1);
                         }});
@@ -47,6 +47,26 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                     if (data.value.length === 0 || data.value[0] === -1) {                        
                         return;
                     }
+
+                    $.ajax({
+                        url: "/api/artists/" + self.selectedArtists()[0] + "/cumulativePlays",
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.records.length === 0) {
+                                return;
+                            }
+                            var groups = []
+                            var items = []
+                            for (var i = 0, len = data.records.length; i < len; i++) {
+                                groups.push(moment(data.records[i][0]).toDate());
+                                items.push(data.records[i][2]);
+                            }
+                            self.areaGroupsValue(groups);
+                            self.areaSeriesValue([{name: data.records[0][1], items: items}]);
+                            self.dataCursorValue('on');
+                        }
+                    });
                 };
             }
             return new artistsContentViewModel();
