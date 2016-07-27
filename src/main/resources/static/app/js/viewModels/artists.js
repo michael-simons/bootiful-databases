@@ -35,6 +35,19 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                 self.areaGroupsValue = ko.observableArray([]);
                 self.dataCursorValue = ko.observable('off');
 
+                self.selectionChanged = function (event, data) {
+                    if ("value" !== data.option) {
+                        return;
+                    }
+                    
+                    self.areaSeriesValue.removeAll();
+                    self.areaGroupsValue.removeAll();
+                    self.dataCursorValue('off');
+                    
+                    if (data.value.length === 0 || data.value[0] === -1) {                        
+                        return;
+                    }
+                };
             }
             return new artistsContentViewModel();
         });
