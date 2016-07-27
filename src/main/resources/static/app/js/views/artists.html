@@ -15,4 +15,23 @@
             </div>
         </form>
     </div>
+    <h2>Cumulative plays per artist and day</h2>
+    <div id='chart-container'>
+        <div id="lineAreaChart" data-bind="ojComponent: {
+            component: 'ojChart', 
+            type: 'lineWithArea', 
+            series: areaSeriesValue, 
+            groups: areaGroupsValue, 
+            timeAxisType: 'enabled',
+            animationOnDisplay: 'on',
+            animationOnDataChange: 'on',            
+            stack: 'on',             
+            hoverBehavior: 'dim',
+            zoomAndScroll: 'live',
+            overview: {rendered: 'off'},
+            dataCursor: dataCursorValue
+         }"
+             style="max-width:1024px;width:100%;height:480px;">
+        </div>                  
+    </div>
 </div>

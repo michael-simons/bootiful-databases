@@ -31,6 +31,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                 }, this);
 
 
+                self.areaSeriesValue = ko.observableArray([]);
+                self.areaGroupsValue = ko.observableArray([]);
+                self.dataCursorValue = ko.observable('off');
+
             }
             return new artistsContentViewModel();
         });
