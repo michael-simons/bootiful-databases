@@ -35,7 +35,7 @@
     </div>
     <h2>Cumulative plays per artist and day</h2>
     <div id='chart-container'>
-        <div id="lineAreaChart" data-bind="ojComponent: {
+        <div id="lineAreaChart" style="max-width:1024px;width:100%;height:320px;" data-bind="ojComponent: {
             component: 'ojChart', 
             type: 'lineWithArea', 
             series: areaSeriesValue, 
@@ -48,8 +48,41 @@
             zoomAndScroll: 'live',
             overview: {rendered: 'off'},
             dataCursor: dataCursorValue
-         }"
-             style="max-width:1024px;width:100%;height:480px;">
-        </div>                  
+         }"></div>                  
+    </div>
+
+    <div class="demo-grid-sizes demo-flex-display">
+        <div class="oj-flex oj-flex-items-pad">
+            <div class="oj-sm-6 oj-flex-item">
+                <h2>Top 10 tracks</h2>
+                <div id="topNTracks" style="max-width:512px;width:100%;height:320px" data-bind="ojComponent: {
+                    component: 'ojChart', 
+                    type: 'bar', 
+                    series: topNTracksSeriesValue,            
+                    dataLabel: chartLabel,
+                    animationOnDisplay: 'auto',
+                    animationOnDataChange: 'auto',
+                    orientation: 'horizontal',
+                    stack: 'off',                   
+                    legend: {rendered: 'off'},
+                    xAxis: {rendered: 'off'}
+                }"></div>    
+            </div>
+            <div class="oj-sm-6 oj-flex-item">
+                <h2>Top 10 albums</h2>
+                <div id="topNTracks" style="max-width:512px;width:100%;height:320px" data-bind="ojComponent: {
+                    component: 'ojChart', 
+                    type: 'bar', 
+                    series: topNAlbumsSeriesValue,            
+                    dataLabel: chartLabel,
+                    animationOnDisplay: 'auto',
+                    animationOnDataChange: 'auto',
+                    orientation: 'horizontal',
+                    stack: 'off',                   
+                    legend: {rendered: 'off'},
+                    xAxis: {rendered: 'off'}
+                }"></div>    
+            </div>
+        </div>
     </div>
 </div>

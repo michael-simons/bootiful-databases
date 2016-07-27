@@ -32,23 +32,34 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                 self.areaSeriesValue = ko.observableArray([]);
                 self.areaGroupsValue = ko.observableArray([]);
                 self.dataCursorValue = ko.observable('off');
+                
+                self.topNTracksSeriesValue = ko.observableArray([]);
+                self.topNAlbumsSeriesValue = ko.observableArray([]);
+
+                self.chartLabel = function (dataContext) {
+                    return dataContext.series;
+                };
 
                 var updateCharts = function () {
                     self.areaSeriesValue.removeAll();
                     self.areaGroupsValue.removeAll();
-                    self.dataCursorValue('off');
+                    self.dataCursorValue('off');                                        
+                    self.topNTracksSeriesValue.removeAll();
+                    self.topNAlbumsSeriesValue.removeAll();
 
                     if (self.selectedArtists().length === 0) {
                         return;
                     }
+                    
+                    var dateRange = {
+                        from: self.fromValue(),
+                        to: self.toValue()
+                    };
 
                     $.ajax({
                         url: "/api/artists/" + self.selectedArtists().join() + "/cumulativePlays",
                         type: 'GET',
-                        data: {
-                            from: self.fromValue(),
-                            to: self.toValue()
-                        },
+                        data: dateRange,
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR) {
                             if (data.records.length === 0) {
@@ -103,6 +114,34 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                             self.dataCursorValue('on');
                         }
                     });
+
+                    
+                    $.when(
+                            $.ajax({
+                                url: "/api/artists/" + self.selectedArtists().join() + "/topNTracks",
+                                type: 'GET',
+                                data: dateRange
+                            }),
+                            $.ajax({
+                                url: "/api/artists/" + self.selectedArtists().join() + "/topNAlbums",
+                                type: 'GET',
+                                data: dateRange
+                            })
+                    )
+                   .done(function (tracks, albums) {
+                        var hlp = [];
+                        for (var i = 0, len = tracks[0].records.length; i < len; i++) {
+                            hlp.push({name: tracks[0].records[i][1], items: [tracks[0].records[i][2]]});
+                        }
+                        self.topNTracksSeriesValue(hlp);   
+                        hlp = [];
+                        for (var i = 0, len = albums[0].records.length; i < len; i++) {
+                            hlp.push({name: albums[0].records[i][0], items: [albums[0].records[i][1]]});
+                        }
+                        self.topNAlbumsSeriesValue(hlp);   
+                    });
+                    
+
                 };
 
                 self.optionChanged = function (event, data) {
