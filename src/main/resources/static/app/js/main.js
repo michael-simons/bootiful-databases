@@ -55,8 +55,8 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
   function (oj, ko, $) { // this callback gets executed when all required modules are loaded
     var router = oj.Router.rootInstance;
     router.configure({
-      'charts': {label: 'Charts'},
-      'artists': {label: 'Artists', isDefault: true},      
+      'charts': {label: 'Charts', isDefault: true},
+      'artists': {label: 'Artists'},      
     });
 
     function RootViewModel() {

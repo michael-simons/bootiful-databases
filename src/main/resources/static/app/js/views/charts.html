@@ -1,6 +1,40 @@
-<!--
- Copyright (c) 2014, 2016, Oracle and/or its affiliates.
- The Universal Permissive License (UPL), Version 1.0
- -->
 <h1>Charts</h1>
-<div>Will display monthly charts…</div>
+<div>
+    <div id="form-container" class="oj-form-layout">
+        <form id="form1" class="oj-form">     
+            <div class="oj-flex">  
+                <div class="oj-flex-item">
+                    <label id="inputgrouplabel">Select year and month</label>
+                    <div class="oj-form-control-group" aria-labelledby="inputgrouplabel" role="group">
+                        <input id="inputnumber-id"
+                               data-bind="ojComponent: {
+                                    component: 'ojInputNumber', 
+                                    max:maxYear,
+                                    min:2005, 
+                                    step:1, 
+                                    value:selectedYear,
+                                    optionChange: optionChanged,
+                                    converter: yearConverter}"/>
+                        <select aria-label="month" id="month" data-bind="ojComponent: {component: 'ojSelect',
+                                      value: selectedMonth, options: months, optionChange: optionChanged}" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h2>Top 20</h2>
+    <div id='chart-container'>
+        <div id="lineAreaChart" style="max-width:1024px;width:100%;height:768px;" data-bind="ojComponent: {
+            component: 'ojChart', 
+            type: 'bar', 
+            series: chartSeriesValue,            
+            dataLabel: chartLabel,
+            animationOnDisplay: 'auto',
+            animationOnDataChange: 'auto',
+            orientation: 'horizontal',
+            stack: 'off',                   
+            legend: {rendered: 'off'},
+            xAxis: {rendered: 'off'}
+         }"></div>                  
+    </div>
+</div>
