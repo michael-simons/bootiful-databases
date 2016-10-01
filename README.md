@@ -16,6 +16,35 @@ The application demonstrates the value of jOOQ when it comes to analysis of data
 
 But if you want to use [modern sql](https://modern-sql.com) and [the index](http://use-the-index-luke.com), for example powerful, analytic functions or have to deal with a database model that is a less than optimal fit for an ORM, than jOOQ will help you.
 
+## Sample requests
+
+Part of the application is in actual use (the schema and some of the queries) at [Daily Fratze](https://dailyfratze.de). You can implement your own scrobble application. This version supports the following requests for now
+
+```
+## Get all artists
+curl -X "GET" "http://127.0.0.1:8080/api/artists"
+```
+
+```
+## Get top n albums by some artists
+curl -X "GET" "http://127.0.0.1:8080/api/artists/54,86/topNAlbums"
+```
+
+```
+## Get top n tracks by some artists Duplicate
+curl -X "GET" "http://127.0.0.1:8080/api/artists/54,86/topNTracks"
+```
+
+```
+## Get cumulative plays by some artists
+curl -X "GET" "http://127.0.0.1:8080/api/artists/54,86/cumulativePlays"
+```
+
+```
+## Get charts for a month
+curl -X "GET" "http://127.0.0.1:8080/api/charts/2016/5?n=40"
+```
+
 ## Creating and running the demo database
 
 As DOAG Konferenz is an Oracle database centric conference, I used Oracle throughout the demo and prepared some docker scripts to get you up and running quickly.
@@ -50,6 +79,18 @@ Please follow those [instructions from Oracle](http://docs.oracle.com/middleware
 ## Installing jOOQ Pro
 
 This demo uses an Oracle Enterprise Edition database, so it needs a jOOQ Professional edition to run. You can get a free, 30 days trial edition here: [jOOQ Download](http://www.jooq.org/download/).
+
+## Ressourcen
+
+* [Spring Initializr](http://start.spring.io)
+* [jOOQ](http://www.jooq.org)
+* [Modern SQL](https://modern-sql.com)
+* [Java, SQL and jOOQ](https://blog.jooq.org)
+* [Vlad on Hibernate](https://vladmihalcea.com/tutorials/hibernate/)
+* [Thoughts on Java](http://www.thoughts-on-java.org/persistence/)
+* [Flyway by Boxfuse](https://flywaydb.org)
+* [Spring Data JPA](http://projects.spring.io/spring-data-jpa/)
+* [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html)
 
 ## License
 
