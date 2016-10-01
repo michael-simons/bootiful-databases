@@ -8,6 +8,8 @@ _Note: The talk and the slides are in German as DOAG con is a German conference,
 
 This repository contains the This repository contains the talk, including my notes and the complete demo, I've created for [DOAG Konferenz + Ausstellung](https://2016.doag.org/de/home/) in Nürnberg.
 
+Here's the link to the german manuscript: [Datenbankzentrische Anwendungen mit Spring Boot und jOOQ](talk/manuskript.adoc).
+
 The basic idea of this demo is to create "cloud native" app based on [Spring Boot](http://projects.spring.io/spring-boot) and then using [jOOQ](http://www.jooq.org) as "database first", SQL-centric approach to your database.
 
 Functional wise the application deals with a simple database model storing the names, artists, genres and albums of tracks I listened to the last years. Those data in full comes from my daily foto project [Daily Fratze](https://dailyfratze.de) that I've been running this year for more than 12 years.
@@ -95,3 +97,7 @@ This demo uses an Oracle Enterprise Edition database, so it needs a jOOQ Profess
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">"Database centric applications with Spring Boot and jOOQ"</span> von <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/michael-simons/DOAG2016" property="cc:attributionName" rel="cc:attributionURL">Michael J. Simons</a> ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
+
+## Imagerights
+
+* "Relentless Persistence": © Curtis Lassam, [Cube Drone](http://cube-drone.com/comics/c/relentless-persistence)
