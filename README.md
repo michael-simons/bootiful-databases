@@ -101,3 +101,7 @@ This demo uses an Oracle Enterprise Edition database, so it needs a jOOQ Profess
 ## Imagerights
 
 * "Relentless Persistence": © Curtis Lassam, [Cube Drone](http://cube-drone.com/comics/c/relentless-persistence)
+* "Electronic data": © iStockphoto.com/[shironosov](http://www.istockphoto.com/portfolio/shironosov)
+* "Magnet und Blanko-Kühlschrank": © iStockphoto.com/[andy0man](http://www.istockphoto.com/de/portfolio/andy0man)
+* "Oracle Databases": [Public Domain](https://commons.wikimedia.org/wiki/File:Oracle_Databases.jpg)
+* "Young men with tablet": © iStockphoto.com/[boggy22](http://www.istockphoto.com/portfolio/boggy22)
