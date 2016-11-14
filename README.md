@@ -2,6 +2,18 @@
 
 **Important:** _The commits and commit messages have been written very carefully to guide you through reading this project and understanding the talk. Please take your time to study them if you don't understand something_.
 
+## Series of blog posts
+
+I have created a series of blog posts around this project, make sure to check them out:
+
+1. [Database centric applications with Spring Boot and jOOQ](http://info.michael-simons.eu/2016/10/28/database-centric-applications-with-spring-boot-and-jooq/)
+2. [Create a Oracle Database Docker container for your Spring Boot + jOOQ application](http://info.michael-simons.eu/2016/10/30/create-a-oracle-database-docker-container-for-your-spring-boot-jooq-application/)
+3. [Take control of your development databases evolution](http://info.michael-simons.eu/2016/10/31/take-control-of-your-development-databases-evolution/)
+4. [An HTTP api for analytic queries](http://info.michael-simons.eu/2016/11/02/an-http-api-for-analytic-queries/)
+5. [Oracle JET: JavaScript components for mere mortals?](http://info.michael-simons.eu/2016/11/14/oracle-jet-javascript-components-for-mere-mortals/)
+
+Those posts cover the talk and the project in great detail. Please provide feedback and a star, if you like them.
+
 ## Talk at DOAG 2016
 
 _Note: The talk and the slides are in German as DOAG con is a German conference, the demo, the readme and other artifacts inside this repo are in English in hope they are useful to a broader audience._
