@@ -2,6 +2,12 @@
 
 **Important:** _The commits and commit messages have been written very carefully to guide you through reading this project and understanding the talk. Please take your time to study them if you don't understand something_.
 
+## Slides
+
+The slides are inside this repository and also on Speakerdeck:
+
+[Datenbankzentrische Anwendungen mit Spring Boot und jOOQ](https://speakerdeck.com/michaelsimons/datenbankzentrische-anwendungen-mit-spring-boot-und-jooq)
+
 ## Series of blog posts
 
 I have created a series of blog posts around this project, make sure to check them out:
