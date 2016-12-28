@@ -25,7 +25,7 @@ public class JooqSpringBootConfig {
     public org.jooq.Configuration jooqConfig(
             final ConnectionProvider connectionProvider,
             final TransactionProvider transactionProvider,
-            final ExecuteListenerProvider executeListenerProvider,            
+            final ExecuteListenerProvider executeListenerProvider,
             @Value("${jooq.renderFormatted:false}") final boolean renderFormatted,
             final Map<String, RecordMapper> recordMappers
     ) {
