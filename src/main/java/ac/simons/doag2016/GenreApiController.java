@@ -12,7 +12,7 @@ import static ac.simons.doag2016.db.tables.Genres.GENRES;
 import static org.jooq.impl.DSL.count;
 
 @RestController
-@RequestMapping("/genres")
+@RequestMapping("/api/genres")
 public class GenreApiController {
     private final DSLContext create;
 
