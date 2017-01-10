@@ -1,7 +1,7 @@
 package ac.simons.doag2016;
 
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -52,7 +52,7 @@ public class ArtistsReportController {
 
     @RequestMapping(path = "/{artistIds}/cumulativePlays")
     public void getCumulativePlays(
-            @PathVariable final BigDecimal[] artistIds,
+            @PathVariable final BigInteger[] artistIds,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)
             final Optional<LocalDate> from,
@@ -91,7 +91,7 @@ public class ArtistsReportController {
     
     @RequestMapping(path = "/{artistIds}/topNAlbums")
     public void getTopNAlbums(
-            @PathVariable final BigDecimal[] artistIds,
+            @PathVariable final BigInteger[] artistIds,
             @RequestParam(defaultValue = "10") final int n,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)
@@ -125,7 +125,7 @@ public class ArtistsReportController {
     
     @RequestMapping(path = "/{artistIds}/topNTracks")
     public void getTopNTracks(
-            @PathVariable final BigDecimal[] artistIds,
+            @PathVariable final BigInteger[] artistIds,
             @RequestParam(defaultValue = "10") final int n,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)

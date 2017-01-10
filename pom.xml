@@ -25,6 +25,7 @@
         <flyway.version>4.0.3</flyway.version>
         <java.version>1.8</java.version>
         <oracle.version>12.1.0.2</oracle.version>
+        <jooq.version>3.9.0</jooq.version>
 
         <!-- jOOQ is a code generator, it needs to be run before the build and 
             the application. So I cannot rely only on Spring properties. We keep them 
