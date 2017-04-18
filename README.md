@@ -70,8 +70,8 @@ curl -X "GET" "http://127.0.0.1:8080/api/charts/2016/5?n=40"
 As DOAG Konferenz is an Oracle database centric conference, I used Oracle throughout the demo and prepared some docker scripts to get you up and running quickly.
 
 1. Go to [docker.com](http://www.docker.com/products/docker) and install docker on your machine
-2. Download [Oracle Database 12c Release 1 Enterprise Edition for Linux](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/database12c-linux-download-2240591.html)
-3. Go to [Oracles docker images repository](https://github.com/oracle/docker-images/tree/master/OracleDatabase), download the _OracleDatabase_ scripts and follow the instructions. Remember to add the two files from step 2 to "dockerfiles/12.1.0.2". I used the following command: `./buildDockerImage.sh -v 12.1.0.2 -e`
+2. Download [Oracle Database 12c Release 2 Standard Edition 2 for Linux](http://www.oracle.com/technetwork/database/enterprise-edition/downloads/index.html)
+3. Go to [Oracles docker images repository](https://github.com/oracle/docker-images/tree/master/OracleDatabase), download the _OracleDatabase_ scripts and follow the instructions. Remember to add the two files from step 2 to "dockerfiles/12.2.0.1". I used the following command: `./buildDockerImage.sh -v 12.2.0.1 -s`
 4. Then, inside this repository, create a running container of this image with `mvn docker:start`. The first start will take a while. The reason behind this is that the Oracle database files are created during the first start and not during image creation. The files are storted inside `${project.basedir}/var`.  There's a timeout of 30 minutes. You may have to change this if you are on a slower machine
 5. The container exposes the following ports to localhost: 1521, 5500 and 5501. The first for SQL*Plus, the later ones for the Oracle Enterprise Manager
 
@@ -86,7 +86,7 @@ This demo uses the Oracle JDBC driver from the official [Oracle Maven Repository
 ```
 <dependency>
 	<groupId>com.oracle.jdbc</groupId>
-	<artifactId>ojdbc7</artifactId>
+	<artifactId>ojdbc8</artifactId>
 </dependency>
 <dependency>
 	<groupId>com.oracle.jdbc</groupId>
@@ -98,7 +98,7 @@ Please follow those [instructions from Oracle](http://docs.oracle.com/middleware
 
 ## Installing jOOQ Pro
 
-This demo uses an Oracle Enterprise Edition database, so it needs a jOOQ Professional edition to run. You can get a free, 30 days trial edition here: [jOOQ Download](http://www.jooq.org/download/).
+This demo uses an Oracle Standard Edition 2 database, so it needs a jOOQ Professional edition to run. You can get a free, 30 days trial edition here: [jOOQ Download](http://www.jooq.org/download/).
 
 ## Ressourcen
 

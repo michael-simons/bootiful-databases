@@ -24,7 +24,7 @@
 
         <flyway.version>4.0.3</flyway.version>
         <java.version>1.8</java.version>
-        <oracle.version>12.1.0.2</oracle.version>
+        <oracle.version>12.2.0.1</oracle.version>
 
         <!-- jOOQ is a code generator, it needs to be run before the build and 
             the application. So I cannot rely only on Spring properties. We keep them 
@@ -68,7 +68,7 @@
         </dependency>
         <dependency>
             <groupId>com.oracle.jdbc</groupId>
-            <artifactId>ojdbc7</artifactId>
+            <artifactId>ojdbc8</artifactId>
             <version>${oracle.version}</version>
         </dependency>
         <dependency>
@@ -100,7 +100,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>oracle/database:12.1.0.2-ee</name>
+                            <name>oracle/database:12.2.0.1-se2</name>
                             <run>
                                 <volumes>
                                     <bind>
