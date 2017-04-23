@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static ac.simons.doag2016.db.tables.Genres.GENRES;
+import static ac.simons.doag2016.db.tables.Plays.PLAYS;
+import static ac.simons.doag2016.db.tables.Tracks.TRACKS;
 import static org.jooq.impl.DSL.count;
 
 @RestController
@@ -33,7 +35,9 @@ public class GenreApiController {
         final Field<Integer> cnt = count().as("cnt");
         return this.create
                 .select(GENRES.GENRE, cnt)
-                .from(GENRES)
+                .from(PLAYS)
+                .join(TRACKS).onKey()
+                .join(GENRES).onKey()
                 .groupBy(GENRES.GENRE)
                 .orderBy(cnt)
                 .fetchInto(GenreWithPlaycountValue.class);
