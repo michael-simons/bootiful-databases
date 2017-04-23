@@ -13,26 +13,26 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputnumber', 'ojs/ojselectco
                     months.push({value: i, label: dateConverter.format(oj.IntlConverterUtils.dateToLocalIso(new Date(2016, i - 1, 1)))});
                 }
                 self.months = ko.observableArray(months);
-                self.selectedMonth = ko.observableArray([5]);
+                self.selectedMonth = ko.observableArray([3]);
 
                 self.chartSeriesValue = ko.observableArray([]);
-                self.chartLabel = function (dataContext) {   
+                self.chartLabel = function (dataContext) {
                     var suffix = '';
                     if(dataContext.seriesData.change !== null && dataContext.seriesData.change !== 0) {
                         suffix += ' ';
                         suffix += dataContext.seriesData.change > 0 ? '▲' : '▼';
                         suffix += dataContext.seriesData.change;
-                        
+
                     }
                     return dataContext.series + suffix;
                 };
 
-                var updateCharts = function () {                    
-                    self.chartSeriesValue.removeAll();                    
+                var updateCharts = function () {
+                    self.chartSeriesValue.removeAll();
                     $.ajax({
                         url: "/api/charts/" + self.selectedYear() + "/" + self.selectedMonth()[0],
                         data: {n:20},
-                        type: 'GET',                        
+                        type: 'GET',
                         dataType: 'json',
                         success: function (data, textStatus, jqXHR) {
                             if (data.records.length === 0) {
@@ -42,18 +42,18 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputnumber', 'ojs/ojselectco
                             for (var i = 0, len = data.records.length; i < len; i++) {
                                 hlp.push({name: data.records[i][0],  change: data.records[i][2], items: [data.records[i][1]]});
                             }
-                            self.chartSeriesValue(hlp);   
+                            self.chartSeriesValue(hlp);
                         }
                     });
                 };
-                
+
                 self.optionChanged = function (event, data) {
                     if ("value" !== data.option) {
                         return;
                     }
                     updateCharts();
                 };
-                
+
                 updateCharts();
             }
             return new chartsContentViewModel();

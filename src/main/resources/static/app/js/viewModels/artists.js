@@ -26,13 +26,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                         }});
                 }, this);
 
-                self.fromValue = ko.observable('2016-01-01');
-                self.toValue = ko.observable('2016-03-31');
+                self.fromValue = ko.observable(moment().date(1).month(0).format('YYYY-MM-DD'));
+                self.toValue = ko.observable(moment().endOf('month').format('YYYY-MM-DD'));
 
                 self.areaSeriesValue = ko.observableArray([]);
                 self.areaGroupsValue = ko.observableArray([]);
                 self.dataCursorValue = ko.observable('off');
-                
+
                 self.topNTracksSeriesValue = ko.observableArray([]);
                 self.topNAlbumsSeriesValue = ko.observableArray([]);
 
@@ -43,14 +43,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                 var updateCharts = function () {
                     self.areaSeriesValue.removeAll();
                     self.areaGroupsValue.removeAll();
-                    self.dataCursorValue('off');                                        
+                    self.dataCursorValue('off');
                     self.topNTracksSeriesValue.removeAll();
                     self.topNAlbumsSeriesValue.removeAll();
 
                     if (self.selectedArtists().length === 0) {
                         return;
                     }
-                    
+
                     var dateRange = {
                         from: self.fromValue(),
                         to: self.toValue()
@@ -82,7 +82,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                                 firstDay.add(1, 'd');
                             }
 
-                            // Create groups and series from array of records                            
+                            // Create groups and series from array of records
                             // This groups the records by day
                             var hlp = data.records.reduce(function (acc, cur) {
                                 var key = moment(cur[0]).toDate();
@@ -115,7 +115,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                         }
                     });
 
-                    
+
                     $.when(
                             $.ajax({
                                 url: "/api/artists/" + self.selectedArtists().join() + "/topNTracks",
@@ -133,14 +133,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'moment', 'ojs/ojselectcombobox', 'o
                         for (var i = 0, len = tracks[0].records.length; i < len; i++) {
                             hlp.push({name: tracks[0].records[i][1], items: [tracks[0].records[i][2]]});
                         }
-                        self.topNTracksSeriesValue(hlp);   
+                        self.topNTracksSeriesValue(hlp);
                         hlp = [];
                         for (var i = 0, len = albums[0].records.length; i < len; i++) {
                             hlp.push({name: albums[0].records[i][0], items: [albums[0].records[i][1]]});
                         }
-                        self.topNAlbumsSeriesValue(hlp);   
+                        self.topNAlbumsSeriesValue(hlp);
                     });
-                    
+
 
                 };
 
