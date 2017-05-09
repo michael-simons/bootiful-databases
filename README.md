@@ -8,13 +8,23 @@ Slides are on speaker deck: [Michael Simons](https://speakerdeck.com/michaelsimo
 
 ## Abstract
 
-The basic idea of this demo is to create "cloud native" app based on [Spring Boot](http://projects.spring.io/spring-boot) and then using [jOOQ](http://www.jooq.org) as "database first", SQL-centric approach to your database.
+The basic idea of this demo is to create a "cloud native" app based on [Spring Boot](http://projects.spring.io/spring-boot) and then using [jOOQ](http://www.jooq.org) as "database first", SQL-centric approach to the database.
 
 Functional wise the application deals with a simple database model storing the names, artists, genres and albums of tracks I listened to the last years. Those data in full comes from my daily foto project [Daily Fratze](https://dailyfratze.de) that I've been running this year for more than 12 years.
 
 The application demonstrates the value of jOOQ when it comes to analysis of data, an area for which ORMs like hibernate weren't designed (see comment by Gavin King on ["What ORMs have taught me: just learn SQL"](https://www.reddit.com/r/programming/comments/2cnw8x/what_orms_have_taught_me_just_learn_sql/cjheyec). If you just deal with simple inserts, updates and deletes during OLTP, you're mostly fine using ORMs like JPA, even problems like the _n+1_ query problems are known and often solved.
 
-But if you want to use [modern sql](https://modern-sql.com) and [the index](http://use-the-index-luke.com), for example powerful, analytic functions or have to deal with a database model that is a less than optimal fit for an ORM, than jOOQ will help you.
+But if you want to use powerful, analytic functions or have to deal with a database model that is a less than optimal fit for an ORM, than jOOQ will help you.
+
+jOOQ is one of several quite different technologies to access relational data from Java based applications. 
+
+jOOQ is short for "Java object oriented querying" and describes a query builder framework that takes a look at your database schema, independent wether you use an Open Source database like PostgreSQL or an commercial product like Oracle Database., and provides you with a domain specific language (DSL) for generating statements.
+
+jOOQs goal is explicitly not to shield the user from SQL but providing a type safe way to use it.
+
+Learn in this session who you can facilitate the "magic" of Spring Boot to provide jOOQ with needed resources and then use it to publish advanced analytic queries as HTTP apis.
+
+Along the way you learn how automatic database migrations help you to do continuous delivery even with database centric applications.
 
 ## Sample requests
 
