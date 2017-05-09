@@ -18,8 +18,11 @@ import static org.jooq.impl.DSL.count;
 public class GenreApiController {
     private final DSLContext create;
 
-    public GenreApiController(DSLContext create) {
+    private final GenreRepository genreRepository;
+
+    public GenreApiController(DSLContext create, GenreRepository genreRepository) {
         this.create = create;
+        this.genreRepository = genreRepository;
     }
 
     @GetMapping
@@ -27,9 +30,9 @@ public class GenreApiController {
         return this.create
                 .selectFrom(GENRES)
                 .orderBy(GENRES.GENRE)
-                .fetchInto(Genres.class);                
+                .fetchInto(Genres.class);
     }
-    
+
     @GetMapping("/playcounts")
     public List<GenreWithPlaycount> getPlaycounts() {
         final Field<Integer> cnt = count().as("cnt");
@@ -41,5 +44,11 @@ public class GenreApiController {
                 .groupBy(GENRES.GENRE)
                 .orderBy(cnt)
                 .fetchInto(GenreWithPlaycount.class);
+    }
+
+    @GetMapping("/withHighestPlaycount")
+    public List<GenreEntity> getGenresWithHighestPlaycount() {
+        return this.genreRepository
+                .findGenresWithHighestPlaycount();
     }
 }
