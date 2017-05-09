@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ac.simons</groupId>
-    <artifactId>doag2016</artifactId>
+    <artifactId>musick</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>#DOAG2016</name>
-    <description>Demos for the talk "Database centric applications with Spring Boot and jOOQ"</description>
+    <name>bootiful-databases</name>
+    <description>Demos for the talk "Bootiful database-centric applications with jOOQ"</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
