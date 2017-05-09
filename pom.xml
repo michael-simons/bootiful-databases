@@ -165,8 +165,6 @@
                         </database>
                         <generate>
                             <deprecated>false</deprecated>
-                            <pojos>true</pojos>
-                            <immutablePojos>true</immutablePojos>
                         </generate>
                         <target>
                             <packageName>ac.simons.bootiful_databases.db</packageName>

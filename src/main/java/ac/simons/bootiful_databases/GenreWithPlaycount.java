@@ -1,17 +1,17 @@
 package ac.simons.bootiful_databases;
 
 public class GenreWithPlaycount {
-    private final String genre;
+    private final String name;
     
     private final int playcount;
 
     public GenreWithPlaycount(String genre, int playcount) {
-        this.genre = genre;
+        this.name = genre;
         this.playcount = playcount;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getName() {
+        return name;
     }
 
     public int getPlaycount() {

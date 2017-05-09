@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.SelectQuery;
 import org.jooq.conf.ParamType;
@@ -19,9 +20,13 @@ import static org.jooq.impl.DSL.select;
 
 public interface GenreRepository extends 
         CrudRepository<GenreEntity, Integer>, GenreRepositoryExt {
+    
+    public List<GenreEntity> findAllByOrderByName();
 }
 
 interface GenreRepositoryExt {
+    public List<GenreWithPlaycount> findGenresWithPlaycount();
+    
     public List<GenreEntity> findGenresWithHighestPlaycount();
 }
 
@@ -34,6 +39,19 @@ class GenreRepositoryImpl implements GenreRepositoryExt {
     public GenreRepositoryImpl(EntityManager entityManager, DSLContext create) {
         this.entityManager = entityManager;
         this.create = create;
+    }
+    
+    @Override
+    public List<GenreWithPlaycount> findGenresWithPlaycount() {
+        final Field<Integer> cnt = count().as("cnt");
+        return this.create
+                .select(GENRES.GENRE, cnt)
+                .from(PLAYS)
+                .join(TRACKS).onKey()
+                .join(GENRES).onKey()
+                .groupBy(GENRES.GENRE)
+                .orderBy(cnt)
+                .fetchInto(GenreWithPlaycount.class);
     }
     
     @Override
