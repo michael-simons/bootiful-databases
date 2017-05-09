@@ -31,7 +31,7 @@ public class GenreApiController {
     }
     
     @GetMapping("/playcounts")
-    public List<GenreWithPlaycountValue> getPlaycounts() {
+    public List<GenreWithPlaycount> getPlaycounts() {
         final Field<Integer> cnt = count().as("cnt");
         return this.create
                 .select(GENRES.GENRE, cnt)
@@ -40,6 +40,6 @@ public class GenreApiController {
                 .join(GENRES).onKey()
                 .groupBy(GENRES.GENRE)
                 .orderBy(cnt)
-                .fetchInto(GenreWithPlaycountValue.class);
+                .fetchInto(GenreWithPlaycount.class);
     }
 }
