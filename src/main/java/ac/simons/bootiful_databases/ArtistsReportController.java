@@ -30,9 +30,9 @@ import static org.jooq.impl.DSL.trunc;
 @RequestMapping("/api/artists")
 public class ArtistsReportController {
 
-    private static final Field<Date> PLAYED_ON_TRUNCATED_TO_DAY 
+    private static final Field<Date> PLAYED_ON_TRUNCATED_TO_DAY
             = trunc(PLAYS.PLAYED_ON, DatePart.DAY).cast(Date.class);
-    
+
     private final DSLContext create;
 
     public ArtistsReportController(DSLContext create) {
@@ -88,7 +88,7 @@ public class ArtistsReportController {
                 .fetch()
                 .formatJSON(response.getOutputStream());
     }
-    
+
     @RequestMapping(path = "/{artistIds}/topNAlbums")
     public void getTopNAlbums(
             @PathVariable final BigInteger[] artistIds,
@@ -122,7 +122,7 @@ public class ArtistsReportController {
                 .fetch()
                 .formatJSON(response.getOutputStream());
     }
-    
+
     @RequestMapping(path = "/{artistIds}/topNTracks")
     public void getTopNTracks(
             @PathVariable final BigInteger[] artistIds,
@@ -135,7 +135,7 @@ public class ArtistsReportController {
             final Optional<LocalDate> to,
             final HttpServletResponse response
     ) throws IOException {
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);        
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         this.create
                 .select(TRACKS.ALBUM,
                         TRACKS.NAME,
@@ -156,5 +156,5 @@ public class ArtistsReportController {
                 .limit(n)
                 .fetch()
                 .formatJSON(response.getOutputStream());
-    }    
+    }
 }
