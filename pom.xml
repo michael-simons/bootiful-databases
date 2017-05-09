@@ -3,6 +3,13 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>ac.simons</groupId>
     <artifactId>bootiful-databases</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -10,13 +17,15 @@
 
     <name>bootiful-databases</name>
     <description>Demos for the talk "Bootiful database-centric applications with jOOQ"</description>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.3.RELEASE</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+    <url>https://github.com/michael-simons/bootiful-databases</url>
+    <inceptionYear>2016</inceptionYear>
+    
+    <developers>
+        <developer>
+            <name>Michael J. Simons</name>
+            <email>michael@simons.ac</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
