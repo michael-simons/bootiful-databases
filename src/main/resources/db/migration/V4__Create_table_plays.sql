@@ -1,5 +1,5 @@
 CREATE TABLE plays (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     track_id INTEGER NOT NULL,
     played_on TIMESTAMP NOT NULL,        
     CONSTRAINT plays_pk PRIMARY KEY (id),    

@@ -1,5 +1,5 @@
 CREATE TABLE tracks (
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     artist_id INTEGER NOT NULL,
     genre_id INTEGER NOT NULL,
     album VARCHAR(255) NOT NULL,    
