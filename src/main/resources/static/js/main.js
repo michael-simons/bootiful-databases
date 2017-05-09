@@ -95,8 +95,8 @@ require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojrouter',
       self.mdScreen.subscribe(function() {oj.OffcanvasUtils.close(self.drawerParams);});
       
       // Application Name used in Branding Area
-      self.appName = ko.observable("Spring Boot + jOOQ + Oracle JET = 😍");
-      self.appNameSmall = ko.observable("Boot + jOOQ + JET = 😍");      
+      self.appName = ko.observable("Bootiful database-centric applications with jOOQ");
+      self.appNameSmall = ko.observable("Bootiful applications with jOOQ");
     }
 
     oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();

@@ -1,79 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Demo Site for DOAG Konferenz 2016" />
-        <meta name="author" content="Michael Simons" />
+<!--
+ Copyright (c) 2014, 2016, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
 
-        <title>Demo Site for DOAG Konferenz 2016</title>
+<!-- ************************ IMPORTANT INFORMATION ************************************
+     This file and Quick Start project are provided as an example of how to configure a JET application.
+     It contains the Oracle JET framework and a default requireJS configuration file to show how JET can be setup
+     in a common application. This project template can be used in conjunction with demo code from the JET website
+     to test JET component behavior and interactions.
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/css/demo.css" rel="stylesheet" />
+     Any CSS styling with the prefix "demo-" is for demonstration only and is not provided as part of the JET framework.
 
-        <script type="text/javascript" src="/js/jquery-2.2.2.min.js"></script>
-        <script type="text/javascript" src="/js/ansi_up.js"></script>       
+     Aria Landmark role attributes are added to the different sections of the application for accessibility compliance.
+     If you change the type of content for a specific section from what is defined, you should also change the
+     role value for that section to represent the appropriate content type.
+     ***************************** IMPORTANT INFORMATION ************************************ -->
 
-        <script>
-            $(document).ready(function () {
-                $.get('/api/banner', function (data) {
-                    $('.banner').each(function () {
-                        $(this).html(ansi_up.ansi_to_html(data));
-                    });
-                });
-            });
-        </script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header clearfix">
-                <h3 class="text-muted">DOAG Konferenz 2016<br />
-                    Database centric applications with Spring Boot and jOOQ</h3>
+<html lang="en-GB">
+  <head>
+    <title data-bind="text: appName">Oracle JET Quick Start - Basic</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
+
+    <!-- This is the main css file for the default Alta theme -->
+    <link rel="stylesheet" href="css/libs/oj/v2.0.2/alta/oj-alta-min.css" type="text/css"/>
+
+    <!-- This is where you would add any app specific styling -->
+    <link rel="stylesheet" href="css/override.css" type="text/css"/>
+
+    <!-- RequireJS configuration file -->
+    <script data-main="js/main" src="js/libs/require/require.js"></script>
+  </head>
+  <body>
+    <!-- template for rendering navigation items shared between nav bar and nav list -->
+    <script type="text/html" id="navTemplate">
+      <li><a href="#">
+        <span data-bind="css: $data['iconClass']"></span>
+        <!-- ko text: $data['name'] --> <!--/ko-->
+      </a></li>
+    </script>
+    <div id="globalBody" class="oj-web-applayout-offcanvas-wrapper oj-offcanvas-outer-wrapper">
+      <div class="oj-offcanvas-inner-wrapper">
+        <!--
+        ** This off-canvas section is used when the browser is resized to a
+        ** medium or smaller media query size. It moves the App Navigation into a drawer
+        -->
+        <!-- off-canvas content -->
+        <div id="offcanvas" class="oj-contrast-marker oj-web-applayout-offcanvas oj-offcanvas-start"
+          data-bind="ojModule: {viewName: 'navDrawer'}"></div>
+        <div class="oj-web-applayout-scrollable-wrapper">
+          <div class="oj-web-applayout-scrollable oj-web-applayout-page">
+            <!-- Header section which contains the Global Branding, Global Navigation,
+            ** and Application Navigation code. Template is located in /js/views/header.html
+            -->
+            <header role="banner" class="oj-web-applayout-header"
+              data-bind="ojModule: 'header'"></header>
+            <!-- This is where your main page content will be loaded -->
+            <div class="oj-web-applayout-max-width oj-web-applayout-content">
+              <div class="oj-flex">                
+                <div class="oj-sm-12 oj-flex-item oj-flex">
+                  <div id="mainContent" role="main" class="oj-panel oj-margin oj-flex-item"
+                    data-bind="ojModule: router.moduleConfig">
+                    <!-- Unlike the Navigation and Complementary sections,
+                      ** this ojModule binding is using "name" instead of "viewName".
+                      ** When the "name" option is specified, ojModule expects that
+                      ** the View and the ViewModel share the same base name.
+                      ** The "viewName" option is used when the View does not have
+                      ** an associated ViewModel or when the ViewModel has a different base name.
+                    -->
+                  </div>
+                </div>
+                <!-- You will notice that each section in the page has a set of column widths defined by CSS classes.
+                  ** These tell the div to take up so much space when it is in a specific media query range.
+                  ** This is part of the responsive grid layout framework provided by JET. As this one is set,
+                  ** the div will take up all 12 columns at a small and up media query size. When it hits extra large,
+                  ** it will only take up 3 columns.
+                -->
+                <div class="oj-sm-12 oj-flex-item oj-flex">
+                  <div id="complementaryContent" role="complementary" class="oj-panel oj-margin oj-flex-item"
+                  data-bind="ojModule: {viewName: 'compContent'}">
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4>Promises</h4>
-                </div>
-
-                <div class="col-lg-6">
-                    <h5><a href="http://projects.spring.io/spring-boot/">Spring Boot</a></h5>
-                    <blockquote>
-                        <p>
-                            Spring Boot makes it easy to create <strong>stand-alone, production-grade Spring based Applications</strong> that you can "just run". We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need very little Spring configuration.
-                        </p>
-                    </blockquote>
-                </div>
-
-                <div class="col-lg-6">
-                    <h5><a href="http://jooq.org">jOOQ</a></h5>
-                    <blockquote>
-                        <p>
-                            <strong>Typesafe SQL</strong>
-                            jOOQ treats SQL like what it is in the first place: A language. Through its unique and modern fluent API design techniques, jOOQ embeds SQL as an internal domain-specific language directly in Java, making it easy for developers to write and read code that almost feels like actual SQL.
-                        </p>
-                    </blockquote>
-                </div>
-                
-                <div class="col-lg-12">
-                    <p><a href="/app/">Let's see...</a></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <pre class="banner"></pre>
-                    <p>
-                        <a href="https://twitter.com/lukaseder/status/755489778448142336">Banner seem to be important for both ;)</a>
-                        <br />
-                        ANSI to HTML done with <a href="https://github.com/drudru/ansi_up">ansi_up.js</a> by Dru Nelson.
-                    </p>
-                </div>                
-            </div>
-
-            <footer class="footer">
-                <p>&copy; 2016 <a href="http://michael-simons.eu">Michael Simons</a></p>
-            </footer>
+          </div>
         </div>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>
