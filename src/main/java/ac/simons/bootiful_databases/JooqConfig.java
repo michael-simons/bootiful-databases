@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
 
 @Configuration
-public class JooqSpringBootConfig {
+public class JooqConfig {
 
     @Bean
     public Settings settings(
