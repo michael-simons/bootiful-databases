@@ -1,6 +1,6 @@
-package ac.simons.doag2016;
+package ac.simons.bootiful_databases;
 
-import ac.simons.doag2016.db.tables.Genres;
+import ac.simons.bootiful_databases.db.tables.Genres;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;

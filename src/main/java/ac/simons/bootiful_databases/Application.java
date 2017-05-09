@@ -1,4 +1,4 @@
-package ac.simons.doag2016;
+package ac.simons.bootiful_databases;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

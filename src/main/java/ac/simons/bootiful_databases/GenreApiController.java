@@ -1,6 +1,6 @@
-package ac.simons.doag2016;
+package ac.simons.bootiful_databases;
 
-import ac.simons.doag2016.db.tables.pojos.Genres;
+import ac.simons.bootiful_databases.db.tables.pojos.Genres;
 import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static ac.simons.doag2016.db.tables.Genres.GENRES;
-import static ac.simons.doag2016.db.tables.Plays.PLAYS;
-import static ac.simons.doag2016.db.tables.Tracks.TRACKS;
+import static ac.simons.bootiful_databases.db.tables.Genres.GENRES;
+import static ac.simons.bootiful_databases.db.tables.Plays.PLAYS;
+import static ac.simons.bootiful_databases.db.tables.Tracks.TRACKS;
 import static org.jooq.impl.DSL.count;
 
 @RestController

@@ -1,7 +1,6 @@
-package ac.simons.doag2016;
+package ac.simons.bootiful_databases;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.time.YearMonth;
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static ac.simons.doag2016.db.Tables.ARTISTS;
-import static ac.simons.doag2016.db.Tables.PLAYS;
-import static ac.simons.doag2016.db.Tables.TRACKS;
+import static ac.simons.bootiful_databases.db.Tables.ARTISTS;
+import static ac.simons.bootiful_databases.db.Tables.PLAYS;
+import static ac.simons.bootiful_databases.db.Tables.TRACKS;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.denseRank;
