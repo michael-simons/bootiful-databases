@@ -158,12 +158,6 @@
                                     <outputSchemaToDefault>true</outputSchemaToDefault>
                                 </schema>
                             </schemata>
-                            <forcedTypes>
-                                <forcedType>
-                                    <name>DECIMAL_INTEGER</name>
-                                    <types>INTEGER</types>
-                                </forcedType>
-                            </forcedTypes>
                         </database>
                         <generate>
                             <deprecated>false</deprecated>

@@ -52,7 +52,7 @@ public class ArtistsReportController {
 
     @RequestMapping(path = "/{artistIds}/cumulativePlays")
     public void getCumulativePlays(
-            @PathVariable final BigInteger[] artistIds,
+            @PathVariable final Integer[] artistIds,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)
             final Optional<LocalDate> from,
@@ -91,7 +91,7 @@ public class ArtistsReportController {
 
     @RequestMapping(path = "/{artistIds}/topNAlbums")
     public void getTopNAlbums(
-            @PathVariable final BigInteger[] artistIds,
+            @PathVariable final Integer[] artistIds,
             @RequestParam(defaultValue = "10") final int n,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)
@@ -125,7 +125,7 @@ public class ArtistsReportController {
 
     @RequestMapping(path = "/{artistIds}/topNTracks")
     public void getTopNTracks(
-            @PathVariable final BigInteger[] artistIds,
+            @PathVariable final Integer[] artistIds,
             @RequestParam(defaultValue = "10") final int n,
             @RequestParam
             @DateTimeFormat(iso = ISO.DATE)

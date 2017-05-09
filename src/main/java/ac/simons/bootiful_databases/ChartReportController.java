@@ -50,14 +50,14 @@ public class ChartReportController {
         final Field<Date> playedOnTruncatedToDay = trunc(PLAYS.PLAYED_ON, DatePart.DAY).cast(Date.class);
 
         YearMonth hlp = YearMonth.of(year, month);
-        final CommonTableExpression<Record3<BigInteger, Integer, Integer>> currentMonth = name("previous_month").fields("track_id", "cnt", "position")
+        final CommonTableExpression<Record3<Integer, Integer, Integer>> currentMonth = name("previous_month").fields("track_id", "cnt", "position")
                 .as(select(PLAYS.TRACK_ID, count().as("cnt"), denseRank().over(orderBy(count().desc())).as("position"))
                         .from(PLAYS)
                         .where(playedOnTruncatedToDay.between(Date.valueOf(hlp.atDay(1)), Date.valueOf(hlp.atEndOfMonth())))
                         .groupBy(PLAYS.TRACK_ID));
 
         hlp = hlp.minusMonths(1);
-        final CommonTableExpression<Record3<BigInteger, Integer, Integer>> previousMonth = name("current_month").fields("track_id", "cnt", "position")
+        final CommonTableExpression<Record3<Integer, Integer, Integer>> previousMonth = name("current_month").fields("track_id", "cnt", "position")
                 .as(select(PLAYS.TRACK_ID, count().as("cnt"), denseRank().over(orderBy(count().desc())).as("position"))
                         .from(PLAYS)
                         .where(playedOnTruncatedToDay.between(Date.valueOf(hlp.atDay(1)), Date.valueOf(hlp.atEndOfMonth())))
@@ -73,8 +73,8 @@ public class ChartReportController {
                 )
                 .from(TRACKS)
                 .join(ARTISTS).onKey()
-                .join(currentMonth).on(currentMonth.field("track_id", BigInteger.class).eq(TRACKS.ID))
-                .leftOuterJoin(previousMonth).on(previousMonth.field("track_id", BigInteger.class).eq(TRACKS.ID))
+                .join(currentMonth).on(currentMonth.field("track_id", Integer.class).eq(TRACKS.ID))
+                .leftOuterJoin(previousMonth).on(previousMonth.field("track_id", Integer.class).eq(TRACKS.ID))
                 .orderBy(currentMonth.field("cnt").desc(), label.asc())
                 .limit(n)
                 .fetch()
