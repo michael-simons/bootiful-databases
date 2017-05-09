@@ -6,7 +6,7 @@ import org.jooq.impl.DSL;
 import org.jooq.tools.jdbc.MockConnection;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockResult;
-import org.jooq.util.oracle.OracleDataType;
+import org.jooq.util.postgres.PostgresDataType;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,13 +22,13 @@ public class ChartReportControllerTest {
     public void getChartsShouldWork() throws Exception {
 
         // Create a Mock data provider for jOOQ
-        final DSLContext create = DSL.using(SQLDialect.ORACLE);
+        final DSLContext create = DSL.using(SQLDialect.POSTGRES);
         final MockDataProvider mockDataProvider = ctx -> {
             final MockResult[] result = new MockResult[1];
             result[0] = new MockResult(0, create.newResult(
-                    DSL.field("label", OracleDataType.VARCHAR2),
-                    DSL.field("cnt", OracleDataType.INTEGER),
-                    DSL.field("change", OracleDataType.INTEGER)
+                    DSL.field("label", PostgresDataType.VARCHAR),
+                    DSL.field("cnt", PostgresDataType.INTEGER),
+                    DSL.field("change", PostgresDataType.INTEGER)
             ));
             return result;
         };

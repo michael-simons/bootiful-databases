@@ -1,4 +1,3 @@
-SET DEFINE OFF;
 Insert into GENRES (ID,GENRE) values ('1','Alternative');
 Insert into GENRES (ID,GENRE) values ('2','Blues');
 Insert into GENRES (ID,GENRE) values ('3','Blues/R&B');

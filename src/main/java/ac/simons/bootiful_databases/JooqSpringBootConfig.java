@@ -52,6 +52,6 @@ public class JooqSpringBootConfig {
                                 .orElseGet(() -> new DefaultRecordMapper<>(recordType, type));
                     }
                 })
-                .derive(SQLDialect.ORACLE);
+                .derive(SQLDialect.POSTGRES);
     }
 }

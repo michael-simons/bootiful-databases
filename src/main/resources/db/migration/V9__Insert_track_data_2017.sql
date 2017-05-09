@@ -1,4 +1,3 @@
-SET DEFINE OFF;
 Insert into ARTISTS (ID,ARTIST) values ('4080','Cutting Crew');
 Insert into ARTISTS (ID,ARTIST) values ('2533','Justin Timberlake');
 Insert into ARTISTS (ID,ARTIST) values ('5731','Atlantean Kodex');

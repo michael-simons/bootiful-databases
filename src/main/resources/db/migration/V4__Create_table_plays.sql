@@ -8,4 +8,4 @@ CREATE TABLE plays (
 
 CREATE INDEX plays_played_on ON plays (played_on);
 
-CREATE INDEX plays_played_on_date ON plays (trunc(played_on, 'DD'));
+CREATE INDEX plays_played_on_date ON plays (date_trunc('day', played_on));

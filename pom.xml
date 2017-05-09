@@ -24,34 +24,21 @@
 
         <flyway.version>4.0.3</flyway.version>
         <java.version>1.8</java.version>
-        <oracle.version>12.2.0.1</oracle.version>
 
         <!-- jOOQ is a code generator, it needs to be run before the build and 
             the application. So I cannot rely only on Spring properties. We keep them 
             for the "Master" Database inside the pom and put them in the default application 
             properties, where they can be easily overriden. To make this work, we have 
             to tell Maven to filter application.properties, see <resources /> -->
-        <db.url>jdbc:oracle:thin:@//localhost:1521/ORCLPDB1</db.url>
-        <db.username>doag2016</db.username>
-        <db.password>doag2016</db.password>
-        <db.schema>DOAG2016</db.schema>
+        <db.url>jdbc:postgresql://localhost:5432/${project.artifactId}</db.url>
+        <db.username>${project.artifactId}</db.username>
+        <db.password>${project.artifactId}</db.password>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jooq</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jooq</groupId>
-                    <artifactId>jooq</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.jooq.pro</groupId>
-            <artifactId>jooq</artifactId>
-            <version>${jooq.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -67,14 +54,9 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>${oracle.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle.jdbc</groupId>
-            <artifactId>orai18n</artifactId>
-            <version>${oracle.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -100,25 +82,19 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>oracle/database:12.2.0.1-se2</name>
+                            <name>postgres:9.6</name>
                             <run>
-                                <volumes>
-                                    <bind>
-                                        <volume>${project.build.scriptSourceDirectory}:/var/tmp/scripts</volume>
-                                        <volume>${basedir}/var/oradata:/opt/oracle/oradata</volume>
-                                    </bind>
-                                </volumes>
+                                <env>
+                                    <POSTGRES_USER>${project.artifactId}</POSTGRES_USER>
+                                    <POSTGRES_PASSWORD>${project.artifactId}</POSTGRES_PASSWORD>
+                                    <POSTGRES_DB>${project.artifactId}</POSTGRES_DB>
+                                </env>
                                 <ports>
-                                    <port>1521:1521</port>
-                                    <port>5500:5500</port>
-                                    <port>5501:5501</port>
+                                    <port>5432:5432</port>
                                 </ports>
                                 <wait>
-                                    <log>DATABASE IS READY TO USE!</log>
-                                    <time>3600000</time>
-                                    <exec>
-                                        <postStart>/var/tmp/scripts/initdb.sh</postStart>
-                                    </exec>
+                                    <log>(?s)database system is ready to accept connections.*database system is ready to accept connections</log>
+                                    <time>40000</time>
                                 </wait>
                             </run>
                         </image>
@@ -151,9 +127,8 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.jooq.pro</groupId>
+                <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${jooq.version}</version>
                 <!-- The jOOQ code generation plugin is also executed in the generate-sources 
                     phase, prior to compilation -->
                 <executions>
@@ -166,23 +141,29 @@
                 </executions>
                 <configuration>
                     <jdbc>
-                        <driver>oracle.jdbc.OracleDriver</driver>
+                        <driver>org.postgresql.Driver</driver>
                         <url>${db.url}</url>
                         <user>${db.username}</user>
                         <password>${db.password}</password>
                     </jdbc>
                     <generator>
                         <database>
-                            <name>org.jooq.util.oracle.OracleDatabase</name>
+                            <name>org.jooq.util.postgres.PostgresDatabase</name>
                             <schemaVersionProvider>SELECT :schema_name || '_' || MAX("version") FROM "schema_version"</schemaVersionProvider>
                             <includes>.*</includes>
                             <excludes>schema_version</excludes>
                             <schemata>
                                 <schema>
-                                    <inputSchema>${db.schema}</inputSchema>
+                                    <inputSchema>public</inputSchema>
                                     <outputSchemaToDefault>true</outputSchemaToDefault>
                                 </schema>
                             </schemata>
+                            <forcedTypes>
+                                <forcedType>
+                                    <name>DECIMAL_INTEGER</name>
+                                    <types>INTEGER</types>
+                                </forcedType>
+                            </forcedTypes>
                         </database>
                         <generate>
                             <deprecated>false</deprecated>
@@ -210,30 +191,4 @@
             </resource>
         </resources>
     </build>
-
-    <repositories>
-        <repository>
-            <id>maven.oracle.com</id>
-            <name>oracle-maven-repo</name>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>maven.oracle.com</id>
-            <name>oracle-maven-repo</name>
-            <url>https://maven.oracle.com</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>
