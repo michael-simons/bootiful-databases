@@ -23,12 +23,12 @@ public class GenreApiController {
     @GetMapping("/playcounts")
     public List<GenreWithPlaycount> getPlaycounts() {
         return this.genreRepository
-                .findGenresWithPlaycount();
+                .findAllWithPlaycount();
     }
 
     @GetMapping("/withHighestPlaycount")
     public List<GenreEntity> getGenresWithHighestPlaycount() {
         return this.genreRepository
-                .findGenresWithHighestPlaycount();
+                .findWithHighestPlaycount();
     }
 }

@@ -25,9 +25,9 @@ public interface GenreRepository extends
 }
 
 interface GenreRepositoryExt {
-    List<GenreWithPlaycount> findGenresWithPlaycount();
+    List<GenreWithPlaycount> findAllWithPlaycount();
     
-    List<GenreEntity> findGenresWithHighestPlaycount();
+    List<GenreEntity> findWithHighestPlaycount();
 }
 
 class GenreRepositoryImpl implements GenreRepositoryExt {
@@ -42,7 +42,7 @@ class GenreRepositoryImpl implements GenreRepositoryExt {
     }
     
     @Override
-    public List<GenreWithPlaycount> findGenresWithPlaycount() {
+    public List<GenreWithPlaycount> findAllWithPlaycount() {
         final Field<Integer> cnt = count().as("cnt");
         return this.create
                 .select(GENRES.GENRE, cnt)
@@ -55,7 +55,7 @@ class GenreRepositoryImpl implements GenreRepositoryExt {
     }
     
     @Override
-    public List<GenreEntity> findGenresWithHighestPlaycount() {
+    public List<GenreEntity> findWithHighestPlaycount() {
         /*
         select id, genre 
         from (
