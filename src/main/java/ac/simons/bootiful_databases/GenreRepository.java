@@ -21,13 +21,13 @@ import static org.jooq.impl.DSL.select;
 public interface GenreRepository extends 
         CrudRepository<GenreEntity, Integer>, GenreRepositoryExt {
     
-    public List<GenreEntity> findAllByOrderByName();
+    List<GenreEntity> findAllByOrderByName();
 }
 
 interface GenreRepositoryExt {
-    public List<GenreWithPlaycount> findGenresWithPlaycount();
+    List<GenreWithPlaycount> findGenresWithPlaycount();
     
-    public List<GenreEntity> findGenresWithHighestPlaycount();
+    List<GenreEntity> findGenresWithHighestPlaycount();
 }
 
 class GenreRepositoryImpl implements GenreRepositoryExt {
