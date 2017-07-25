@@ -28,7 +28,7 @@ public class ChartReportControllerTest {
             result[0] = new MockResult(0, create.newResult(
                     DSL.field("label", PostgresDataType.VARCHAR),
                     DSL.field("cnt", PostgresDataType.INTEGER),
-                    DSL.field("change", PostgresDataType.INTEGER)
+                    DSL.field("changeInPosition", PostgresDataType.INTEGER)
             ));
             return result;
         };
@@ -58,7 +58,7 @@ public class ChartReportControllerTest {
                         + "      \"type\": \"INTEGER\"\n"
                         + "    },\n"
                         + "    {\n"
-                        + "      \"name\": \"change\",\n"
+                        + "      \"name\": \"changeInPosition\",\n"
                         + "      \"type\": \"INTEGER\"\n"
                         + "    }\n"
                         + "  ], "
