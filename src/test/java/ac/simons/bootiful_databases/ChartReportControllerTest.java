@@ -53,7 +53,7 @@ public class ChartReportControllerTest {
                         + "      \"type\": \"VARCHAR\"\n"
                         + "    },\n"
                         + "    {\n"
-                        + "      \"table\": \"previous_month\",\n"
+                        + "      \"table\": \"current_month\",\n"
                         + "      \"name\": \"cnt\",\n"
                         + "      \"type\": \"INTEGER\"\n"
                         + "    },\n"
