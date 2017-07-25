@@ -69,7 +69,8 @@ public class ChartReportController {
                 .with(previousMonth)
                 .select(label,
                         currentMonth.field("cnt"),
-                        previousMonth.field("position").minus(currentMonth.field("position")).as("change")
+                        previousMonth.field("position").minus(currentMonth.field("position"))
+                                .as("changeInPosition")
                 )
                 .from(TRACKS)
                 .join(ARTISTS).onKey()

@@ -18,10 +18,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputnumber', 'ojs/ojselectco
                 self.chartSeriesValue = ko.observableArray([]);
                 self.chartLabel = function (dataContext) {
                     var suffix = '';
-                    if(dataContext.seriesData.change !== null && dataContext.seriesData.change !== 0) {
+                    if(dataContext.seriesData.changeInPosition !== null && dataContext.seriesData.changeInPosition !== 0) {
                         suffix += ' ';
-                        suffix += dataContext.seriesData.change > 0 ? '▲' : '▼';
-                        suffix += dataContext.seriesData.change;
+                        suffix += dataContext.seriesData.changeInPosition > 0 ? '▲' : '▼';
+                        suffix += dataContext.seriesData.changeInPosition;
 
                     }
                     return dataContext.series + suffix;
@@ -40,7 +40,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojinputnumber', 'ojs/ojselectco
                             }
                             var hlp = [];
                             for (var i = 0, len = data.records.length; i < len; i++) {
-                                hlp.push({name: data.records[i][0],  change: data.records[i][2], items: [data.records[i][1]]});
+                                hlp.push({name: data.records[i][0],  changeInPosition: data.records[i][2], items: [data.records[i][1]]});
                             }
                             self.chartSeriesValue(hlp);
                         }
