@@ -134,9 +134,6 @@
                     <url>${db.url}</url>
                     <user>${db.username}</user>
                     <password>${db.password}</password>
-                    <locations>
-                        <location>filesystem:src/main/resources/db/migration</location>
-                    </locations>
                 </configuration>
             </plugin>
             <plugin>
