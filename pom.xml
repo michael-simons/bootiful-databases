@@ -95,7 +95,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>postgres:9.6</name>
+                            <name>postgres:10.22-alpine</name>
                             <run>
                                 <env>
                                     <POSTGRES_USER>${project.artifactId}</POSTGRES_USER>
