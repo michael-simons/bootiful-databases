@@ -79,6 +79,199 @@ and access the application at [http://localhost:8080](http://localhost:8080).
 * [Spring Data JPA](http://projects.spring.io/spring-data-jpa/)
 * [Repository Pattern](http://martinfowler.com/eaaCatalog/repository.html)
 
+
+## Fun
+
+A work of art, done by a madmen, this post by [Lukas Eder](https://twitter.com/lukaseder) ["How to Plot an ASCII Bar Chart with SQL"](https://blog.jooq.org/how-to-plot-an-ascii-bar-chart-with-sql/).
+With the dataset available in this repository, you can plot a chart of how often I listened to Queen in 2016:
+
+```
+                                          chart                                           
+------------------------------------------------------------------------------------------
+ 45.0000000 |                                              ##                           
+ 42.0000000 |                                              ##                           
+ 39.0000000 |                                              ##                           
+ 36.0000000 |                                              ##          ##               
+ 33.0000000 |                                              ##          ##               
+ 30.0000000 |                                              ##          ##               
+ 27.0000000 |                                              ##          ##               
+ 24.0000000 |                                              ##          ##               
+ 21.0000000 |                   ##                         ##          ##               
+ 18.0000000 |                   ##                         ##          ##               
+ 15.0000000 | ##    ##    ##    ##             ##          ##          ##               
+ 12.0000000 | ##    ##    ##    ##             ##          ##          ##               
+ 9.00000000 | ##    ##    ##    ##             ##       ## ##          ##               
+ 6.00000000 | ##    ##    ##    ##          ## ##       ## ## ##       ##               
+ 3.00000000 | ##    ##    ##    ##          ## ##       ## ## ##    ## ##               
+ -----------+----------------------------------------------------------------------------
+            | 2016-01-13 00:00:00                                     2016-06-30 00:00:00
+(17 rows)
+```
+
+with this query:
+
+
+```
+-- The example uses https://www.jooq.org/sakila, but you can just replace
+-- the "source" table with anything else
+with
+ 
+  -- This part is what you can modify to adapt to your own needs
+  --------------------------------------------------------------
+ 
+  -- Your data producing query here 
+  source (key, value) as (
+    select p.played_on::date::timestamp, count(*)
+    from plays p join tracks t on t.id = p.track_id join artists a on a.id = t.artist_id
+    where a.artist = 'Queen'
+    group by p.played_on::date::timestamp
+  ),
+   
+  -- Some configuration items:
+  constants as (
+    select
+     
+      -- the height of the y axis
+      15 as height, 
+ 
+      -- the width of the x axis, if normalise_x, otherwise, ignored
+      25 as width, 
+ 
+      -- the bar characters
+      '##' as characters,
+ 
+      -- the characters between bars
+      ' ' as separator,
+       
+      -- the padding of the labels on the y axis
+      10 as label_pad, 
+       
+      -- whether to normalise the data on the x axis by
+      -- - filling gaps (if int, bigint, numeric, timestamp, 
+      --   timestamptz)
+      -- - scaling the x axis to "width"
+      true as normalise_x
+  ),
+   
+  -- The rest doesn't need to be touched
+  --------------------------------------
+   
+  -- Pre-calculated dimensions of the source data
+  source_dimensions (kmin, kmax, kstep, vmin, vmax) as (
+    select
+      min(key), max(key), 
+      (max(key) - min(key)) / max(width), 
+      min(value), max(value)
+    from source, constants
+  ),
+   
+  -- Normalised data, which fills the gaps in case the key data
+  -- type can be generated with generate_series (int, bigint, 
+  -- numeric, timestamp, timestamptz)
+  source_normalised (key, value) as (
+    select k, coalesce(sum(source.value), 0)
+    from source_dimensions
+      cross join constants
+      cross join lateral 
+        generate_series(kmin, kmax, kstep) as t (k)
+      left join source 
+        on source.key >= t.k and source.key < t.k + kstep
+    group by k
+  ),
+ 
+  -- Replace source_normalised by source if you don't like the 
+  -- normalised version
+  actual_source (i, key, value) as (
+    select row_number() over (order by key), key, value 
+    from source_normalised, constants
+    where normalise_x
+    union all
+    select row_number() over (order by key), key, value
+    from source, constants
+    where not normalise_x
+  ),
+     
+  -- Pre-calculated dimensions of the actual data
+  actual_dimensions (
+    kmin, kmax, kstep, vmin, vmax, width_or_count
+  ) as (
+    select
+      min(key), max(key), 
+      (max(key) - min(key)) / max(width), 
+      min(value), max(value), 
+      case
+        when every(normalise_x) then least(max(width), count(*)::int) 
+        else count(*)::int
+      end
+    from actual_source, constants
+  ),
+   
+  -- Additional convenience
+  dims_and_consts as (
+    with
+      temp as (
+        select *, 
+        (length(characters) + length(separator)) 
+          * width_or_count as bar_width
+      from actual_dimensions, constants
+    )
+    select *,
+      (bar_width - length(kmin::text) - length(kmax::text)) 
+        as x_label_pad
+    from temp
+  ),
+   
+  -- A cartesian product for all (x, y) data points
+  x (x) as (
+    select generate_series(1, width_or_count) from dims_and_consts
+  ),
+  y (y) as (
+    select generate_series(1, height) from dims_and_consts
+  ),
+ 
+  -- Rendering the ASCII chart
+  chart (rn, chart) as (
+    select
+      y,
+      lpad(y * (vmax - vmin) / height || '', label_pad) 
+        || ' | '
+        || string_agg(
+             case
+               when height * actual_source.value / (vmax - vmin) 
+                 >= y then characters 
+               else repeat(' ', length(characters)) 
+             end, separator 
+             order by x
+           )
+    from
+      x left join actual_source on actual_source.i = x, 
+      y, dims_and_consts
+    group by y, vmin, vmax, height, label_pad
+    union all
+    select
+      0, 
+      repeat('-', label_pad) 
+        || '-+-'
+        || repeat('-', bar_width)
+    from dims_and_consts
+    union all
+    select
+      -1, 
+      repeat(' ', label_pad) 
+        || ' | '
+        || case
+             when x_label_pad < 1 then ''
+             else kmin || repeat(' ', x_label_pad) || kmax 
+           end
+    from dims_and_consts
+  )
+select chart
+from chart
+order by rn desc
+;
+```
+
+
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Lizenzvertrag" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">"Bootiful database-centric applications with jOOQ"</span> von <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/michael-simons/DOAG2016" property="cc:attributionName" rel="cc:attributionURL">Michael J. Simons</a> ist lizenziert unter einer <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International Lizenz</a>.
